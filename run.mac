@@ -1,0 +1,124 @@
+#
+############CONTROLING VERBOSE
+/control/verbose 2
+/run/verbose 2
+/event/verbose 0
+#/tracking/verbose 1
+/tracking/verbose 0
+###############
+/run/initialize
+# Visualize with OPENGL
+/control/execute vis.mac
+##############WORLD MATERIAL####################################################
+/gdet/det/setWorldMaterial G4_AIR
+##########ACTIVE DETECTOR#######################################################
+# target material reffers to active detector!
+#
+/gdet/det/total_diameter 8.3 cm
+#7.3 cm 4.46 cm
+/gdet/det/total_height 9.85 cm
+#7.3 cm 2.0 cm
+#
+#/gdet/det/setTargetMaterial G4_SODIUM_IODIDE
+#G4_SODIUM_IODIDE ArCO2_80_20
+/gdet/det/setTargetMaterial G4_Ge
+/gdet/det/active_diameter 6.05 cm
+#6.3 cm 4.45 cm
+/gdet/det/active_height 6.3 cm
+#6.3 cm 1.26 cm
+#
+#/gdet/det/setWindowMaterial G4_Al
+#G4_Al G4_AIR
+/gdet/det/setWindowMaterial G4_Be
+/gdet/det/window_thickness 0.05 cm
+#0.05 cm 0.0005 cm
+#
+/gdet/det/setGapMaterial G4_Galactic
+#G4_Galactic G4_AIR
+/gdet/det/endCapToDetector 0.4 cm
+#0.5 cm 0.63 cm
+#
+/gdet/det/setMontureMaterial G4_Al
+#G4_Al G4_AIR
+/gdet/det/monture_thickness 0.08 cm
+#0.05 cm 0.0005 cm
+#
+/gdet/det/isCoaxial off
+/gdet/det/setHoleMaterial G4_AU
+/gdet/det/hole_diameter 5.85 mm
+/gdet/det/hole_height 14.1 mm
+##########################################SOURCE################################# 
+#
+#########Point source or Frontal beam
+/gdet/det/pointSourceOrFrontalBeamToDetectorDistance 3.8 cm
+/gdet/det/frontalBeamRadius 0.1 cm
+/gdet/det/frontalBeamAngle 0.0 deg
+#
+#########Sarpagan (a cylinder shape on top of detector) or Marinelli baker.
+/gdet/det/setSourceMaterial G4_WATER
+#G4_WATER ; G4_CALCIUM_SULFATE soil_typicalloam_seltzer
+/gdet/det/source_external_diameter 7.5 cm
+#1.5 cm
+#7.5 cm 2.2 cm
+/gdet/det/source_total_height 3.4 cm
+#3.4 cm 0.0001 cm
+#/gdet/det/source_external_diameter 13.25 cm
+#/gdet/det/source_total_height 8.6 cm
+/gdet/det/setSourceEnvelopeMaterial G4_POLYVINYL_CHLORIDE
+/gdet/det/source_envelope_thickness 0.1 cm
+#0.1 cm 0.00001 cm
+########Addition.Marinelli Baker###
+/gdet/det/source_internal_diameter 8.55 cm
+/gdet/det/source_upper_height 3.8 cm
+#
+# Source type: 0= Frontal beam; 1=Point source; 2=Sarpagan (top cylinder); 3= Marinelli baker
+#
+/gdet/gun/source 2
+#########################if want full random emmission instead of variance reduction!##choose on or off
+/gdet/gun/rndm off
+##############DELTA ENERGY TO DEFINE THE PEAK########################
+#
+/gdet/gun/deltaEnergy 5 keV
+#
+#########For beta and alpha measurements, due to plateau set, a virtual index threshold may be required.
+#If plateau is not an ideal straight (flat) line, then measure a known source at about end of plateau voltage.
+#Calculate efficiency. At this stage, the efficiency should match with the Monte-Carlo simulated efficiency,
+#because all quanta that reach the detector (without impediment) is supposed to be recorded (any small EDEP=count).
+#Then, set working voltage at your leisure...typically at half of plateau. Calculate again the efficiency.
+#Adjust accordingly energyThresholdForCounting to match. In this way, one can measure any source in any 
+#geometry and composition by knowing energyThresholdForCounting at working voltage!!
+#
+/gdet/event/energyThresholdForCounting 0.0 keV
+#2000 keV
+####################################updating geometry: Mandatory command#######
+#
+/gdet/det/update
+#
+###################################################################
+#setting modulo, i.e when to print simulation info!
+#
+/gdet/event/printModulo 1000
+#
+# after each [printModulo] events
+##############################################################
+#########CLEAR AND RESET THE VIEW...ON THE FLY
+/vis/viewer/clear
+/vis/viewer/refresh
+###########################################
+#/run/initialize
+#########Common View option
+#Comment and uncomment the next line to: see initial field setup/not see it but do not superimpose scene!
+#/vis/scene/endOfEventAction refresh
+/vis/viewer/set/autoRefresh false
+#
+######KINETIC ENERGY!######################
+/gun/particle gamma
+/gun/energy 0.662 MeV
+#/gun/particle alpha
+#/gun/energy 5.486 MeV
+#/gun/particle e+
+#/gun/energy 0.600 MeV
+#/gun/particle e-
+#/gun/energy 0.600 MeV
+#
+/run/beamOn 20000

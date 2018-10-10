@@ -1,0 +1,2 @@
+This software is based on Geant4 (version 4.9.6_p02). This product includes software developed by Members of the Geant4 Collaboration ( http://cern.ch/geant4 ). The  Geant4 software  is  copyright of the Copyright Holders  of the Geant4 Collaboration.  It is provided  under  the terms  and conditions of the Geant4 Software License,  included in the file  LICENSE and available at  http://cern.ch/geant4/license .  These  include a list of copyright holders.
+
