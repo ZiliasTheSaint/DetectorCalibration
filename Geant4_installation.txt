@@ -1,0 +1,137 @@
+Consult  https://geant4.web.cern.ch/. Briefly, the installation will go like this:
+
+1. Download Geant 4.9.6_p02 source code from https://geant4.web.cern.ch/ (just google geant4).
+2. In order to install Geant 4, the following requires additional sofwares are required:
+-CMake 2.6.4 or higher
+-C++ compiler: WINDOWS: Visual Studio 2010, either Express or Higher Editions.
+			   Linux: GNU Compiler Collection
+			   Mac OS X: GCC(g++) (Xcode 4).
+3. Say, the Geant 4 source directory = /path/to/geant4.9.6_p02. Create alongside source directory,
+the Geant4 build directory, say  /path/to/geant4.9.6_p02_build
+
+Installation on Windows:
+
+Open the CMake (cmake-gui) executable, and click on the Browse Source... button in the top right hand corner
+of the window => select source directory. Click on the Browse Build...=> select build directory.
+Click on the Configure button on the bottom left hand side of the GUI. In the popup window, select Visual Studio 2010.
+Ensure only the Use default native compilers radio box is checked. Then click on the Finish button.
+By default, CMake will configure the build to install Geant4 under C:/Program Files/Geant4. If you
+do not wish to use this directory, or do not have permission to install there, you can change the installation
+location. Click on the arrow next to the the CMAKE entry in the central options display to expand all CMake
+specific configuration options. Scroll down to locate the CMAKE_INSTALL_PREFIX entry. 
+Click on the entry and edit the path directly or via the file browser popup.
+Once you have adjusted any options, click on the Configure button again. After this has finished, all the options
+listed in the central option display should be white. If you still have entries in red, click Configure to reconfigure
+until all entries are white.
+Now click on the Generate button to generate the Visual Studio project. All being well, CMake will generate
+the solution files and finally report Configuring done, Generating done in the logging window at the bottom
+of the GUI. You can now close the CMake GUI.
+Now start up Visual Studio, and choose Open Project. This guide is somewhat specific to Visual Studio 2010
+Express, but the solutions should appear with the same names in other versions. Browse to your build directory,
+and open the Geant4.sln Microsoft Visual Studio Solution file.
+In the Solution Explorer, right click on the INSTALL solution, and select Build from the popup menu. The
+solution will now build and install to the directory you chose for CMAKE_INSTALL_PREFIX earlier. If you
+wish to build a different configuration (Release if you built Debug first, for example), then simply change the
+solution configuration as described in the previous paragraph, and build the INSTALL solution again.
+If you chose not to install nuclear data:
+You can install these datasets manually
+now or after you have installed Geant4. To do this,
+download the following files:
+http://geant4.cern.ch/support/source/G4NDL.4.2.tar.gz
+http://geant4.cern.ch/support/source/G4EMLOW.6.32.tar.gz
+http://geant4.cern.ch/support/source/G4PhotonEvaporation.2.3.tar.gz
+http://geant4.cern.ch/support/source/G4RadioactiveDecay.3.6.tar.gz
+http://geant4.cern.ch/support/source/G4NEUTRONXS.1.2.tar.gz
+http://geant4.cern.ch/support/source/G4PII.1.3.tar.gz
+http://geant4.cern.ch/support/source/RealSurface.1.0.tar.gz
+http://geant4.cern.ch/support/source/G4SAIDDATA.1.1.tar.gz
+and unpack them under the directory:
+/path/to/geant4.9.6-install/share/Geant4-9.6.0/data. Dont forget to set them as environmental variable. 
+The key/value pair must look like:
+G4LEDATA ...\Data\G4EMLOW6.32
+G4LEVELGAMMADATA ...\Data\PhotonEvaporation2.3
+G4NEUTRONHPDATA ...\Data\G4NDL4.2
+G4NEUTRONXSDATA ...\Data\G4NEUTRONXS1.2
+G4PIIDATA ...\Data\G4PII1.3
+G4RADIOACTIVEDATA ...\Data\RadioactiveDecay3.6
+G4REALSURFACEDATA ...\Data\RealSurface1.0
+G4SAIDXSDATA ...\Data\G4SAIDDATA1.1
+
+TO WORK with Visual Studio on projects: We have source code from repository, so create build folder alongside.
+Open CMake: choose source and destination (build)
+add entry
+Geant4_DIR
+Pay attention..it is case sensitive
+
+Choose PATH => enter the path to Geant4_install/lib/Geant4
+
+Press Configure 2x
+Run Generate!
+
+Open Visual studio and open solution from build folder....Happy coding!
+
+Installation on Linux/Unix:
+
+These instructions are for LINUX MINT 18.1 SERENA 64 bit MATE desktop and equivalent distros like Ubuntu. For other distros, you have to adapt!!
+
+In order to run the program, you must have GEANT4 libraries and GEANT4 nuclear data. You can download them and install according to GEANT4 documentation from:
+http://geant4.cern.ch/
+
+The step by step instructions are the following:
+1. Install cmake (from CLI or software manager)
+2. Install build-essential
+3. Install libxmu-dev (required by option: openGL_X11)
+4. Install  freeglut3-dev (required by option: openGL_X11)
+5. Extract geant4_9_6_p02.rar (from geant4Source folder) and we have geant4_9_6_p02 folder here: ~/geant4_9_6_p02
+6. Create a Geant4 build folder, geant4_9_6_p02_build, alongside with geant4_9_6_p02 so we have the folder here: ~/geant4_9_6_p02_build.
+7. Inside geant4 build directory open a terminal (you are in ~/geant4_9_6_p02_build) and type (then hit enter) :
+   cmake -DCMAKE_INSTALL_PREFIX=~/geant4_9_6_p02_install -DGEANT4_USE_SYSTEM_EXPAT=OFF -DGEANT4_USE_OPENGL_X11=ON ~/geant4_9_6_p02
+8. Still inside geant 4 build, if you have 4-core processor, type:
+   make -j 4
+   if you have dual core: make -j 2 etc.
+9. Still inside geant 4 build run:
+   make install
+Close terminal.
+Now you have the Geant 4 instalation folder here: ~/geant4_9_6_p02_install. The Geant 4 libraries are located inside ~/geant4_9_6_p02_install/lib/Geant4-9.6.2.
+10. Download nuclear data as abpve, and to be consistent with standard Geant4 installation, rename "Data" folder to "data". Cut and paste "data" to:
+~/geant4_9_6_p02_install/share/Geant4-9.6.2
+11. Now we want to set environmental variables to point to Geant 4 nuclear data. Go to home folder (~) and open a terminal there (you are in ~). Type:
+    nano .bashrc
+    go to the end and copy/paste the following:
+    export G4LEDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/G4EMLOW6.32
+    export G4LEVELGAMMADATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/PhotonEvaporation2.3
+    export G4NEUTRONHPDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/G4NDL4.2
+    export G4NEUTRONXSDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/G4NEUTRONXS1.2
+    export G4PIIDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/G4PII1.3
+    export G4RADIOACTIVEDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/RadioactiveDecay3.6
+    export G4REALSURFACEDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/RealSurface1.0
+    export G4SAIDXSDATA=~/geant4_9_6_p02_install/share/Geant4-9.6.2/data/G4SAIDDATA1.1
+    Then press CTRL + X and choose Y to save changes. 
+Now all GEANT4 dependencies are set. Close terminal
+12. Make a folder g4work inside home and extract the program source code (say MYSOURCE; here MYSOURCE=GDet). We have the folder: ~/g4work/MYSOURCE. 
+13. Make a build folder alongside, so we have: ~/g4work/MYSOURCE_build
+14. Open a terminal inside source build folder and type:
+    cmake -DCMAKE_PREFIX_PATH=~/geant4_9_6_p02_install/lib/Geant4-9.6.2 ~/g4work/MYSOURCE
+15. Still inside build folder run (if you have 4 core processor):
+    make -j 4
+16 Edit run.mac if you want custom input data and run the executable MYPROGRAM (here is: detector) by typing:
+    ./MYPROGRAM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
