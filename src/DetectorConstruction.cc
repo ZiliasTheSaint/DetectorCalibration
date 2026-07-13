@@ -177,6 +177,16 @@ void DetectorConstruction::DefineMaterials()
 		soil_typicalloam_seltzer->AddMaterial(Ca, fractionmass=0.005366);
 		soil_typicalloam_seltzer->AddMaterial(Fe, fractionmass=0.009582);
 
+	G4Material* eu152_polatom_epox_resin = new G4Material("eu152_polatom_epox_resin", density=1.1*g/cm3, ncomponents=3);
+	eu152_polatom_epox_resin->AddMaterial(H , fractionmass=0.07);
+	eu152_polatom_epox_resin->AddMaterial(Oxygen , fractionmass=0.19);
+	eu152_polatom_epox_resin->AddMaterial(Carbon , fractionmass=0.74);
+
+	G4Material* iaea_pt2026_sample5_resin = new G4Material("iaea_pt2026_sample5_resin", density=1.16*g/cm3, ncomponents=4);
+	iaea_pt2026_sample5_resin->AddMaterial(H , fractionmass=0.084);
+	iaea_pt2026_sample5_resin->AddMaterial(Oxygen , fractionmass=0.232);
+	iaea_pt2026_sample5_resin->AddMaterial(Carbon , fractionmass=0.648);
+	iaea_pt2026_sample5_resin->AddMaterial(N , fractionmass=0.036);
 /*
 d = 1.5*g/cm3;
   moon =  new G4Material("moon",d,6);
