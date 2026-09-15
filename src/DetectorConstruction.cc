@@ -187,6 +187,21 @@ void DetectorConstruction::DefineMaterials()
 	iaea_pt2026_sample5_resin->AddMaterial(Oxygen , fractionmass=0.232);
 	iaea_pt2026_sample5_resin->AddMaterial(Carbon , fractionmass=0.648);
 	iaea_pt2026_sample5_resin->AddMaterial(N , fractionmass=0.036);
+
+	//see geant 4 src\source\materials\src: G4NistMaterialBuilder.cc, line 704->.....
+	G4Material* Mg = man->FindOrBuildMaterial("G4_Mg");
+	G4Material* S = man->FindOrBuildMaterial("G4_S");
+	G4Material* P = man->FindOrBuildMaterial("G4_P");
+	G4Material* ifin_pt2026_pulbere = new G4Material("ifin_pt2026_pulbere", density=0.6*g/cm3, ncomponents=9);
+	ifin_pt2026_pulbere->AddMaterial(Carbon , fractionmass=0.50);
+	ifin_pt2026_pulbere->AddMaterial(Oxygen , fractionmass=0.39);
+	ifin_pt2026_pulbere->AddMaterial(N , fractionmass=0.024);
+	ifin_pt2026_pulbere->AddMaterial(H , fractionmass=0.07);
+	ifin_pt2026_pulbere->AddMaterial(K , fractionmass=0.01);
+	ifin_pt2026_pulbere->AddMaterial(Mg , fractionmass=0.002);
+	ifin_pt2026_pulbere->AddMaterial(S , fractionmass=0.0015);
+	ifin_pt2026_pulbere->AddMaterial(P , fractionmass=0.0015);
+	ifin_pt2026_pulbere->AddMaterial(Ca , fractionmass=0.001);
 /*
 d = 1.5*g/cm3;
   moon =  new G4Material("moon",d,6);
