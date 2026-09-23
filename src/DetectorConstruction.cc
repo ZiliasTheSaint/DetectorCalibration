@@ -241,6 +241,11 @@ void DetectorConstruction::DefineMaterials()
 	baso4_pulbere_material->AddMaterial(Oxygen , fractionmass=0.274212);
 	baso4_pulbere_material->AddMaterial(Ba , fractionmass=0.58842);
 
+	G4Material* baso4_pulbere_material2 = new G4Material("baso4_pulbere_material2", density=0.43*g/cm3, ncomponents=3);
+	baso4_pulbere_material2->AddMaterial(S , fractionmass=0.137368);
+	baso4_pulbere_material2->AddElement(O_el , fractionmass=0.274212);
+	baso4_pulbere_material2->AddMaterial(Ba , fractionmass=0.58842);
+
 	G4Element* Ba_el = man->FindOrBuildElement("Ba");
 	G4Element* S_el  = man->FindOrBuildElement("S");
 	
@@ -248,7 +253,13 @@ void DetectorConstruction::DefineMaterials()
 	baso4_pulbere_elem->AddElement(Ba_el, 1);
 	baso4_pulbere_elem->AddElement(S_el,  1);
 	baso4_pulbere_elem->AddElement(O_el,  4);
-	//some minor differences!!!!!!->elem !!!!!!!!
+	//some minor differences!!!!!!->elem !!!!!!!!mneah...era bine si inainte!!!!!
+	//diferentele vin din fractionbyweight si nr atomi....toate material si material2 dau la fel.
+	/*
+	In Geant4, cand adaugi un element sau un alt material intr-un compus nou prin fractie de masa
+	(AddElement sau AddMaterial), Geant4 extrage doar compozitia atomica si nucleara (Z, A, izotopi)
+	a acelui ingredient.Toate proprietatile macroscopice ale ingredientului (starea de gaz kStateGas,
+	presiunea, temperatura sau densitatea lui originala) sunt complet sterse si ignorate.*/
 
 	
 
