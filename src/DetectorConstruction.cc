@@ -34,6 +34,7 @@
 
 #include "G4Material.hh"
 #include "G4NistManager.hh"
+//#include "G4Element.hh"
 
 #include "G4Box.hh"
 #include "G4LogicalVolume.hh"
@@ -123,6 +124,11 @@ void DetectorConstruction::DefineMaterials()
 	G4NistManager* man = G4NistManager::Instance();
     G4Material* CO2_std = man->FindOrBuildMaterial("G4_CARBON_DIOXIDE");
     G4Material* Ar_std = man->FindOrBuildMaterial("G4_Ar");
+
+	G4Element* O_el  = man->FindOrBuildElement("O");
+	G4Element* H_el  = man->FindOrBuildElement("H");
+	G4Element* N_el  = man->FindOrBuildElement("N");
+	G4Element* Cl_el  = man->FindOrBuildElement("Cl");
 	//----------------------------
 	G4Element* C  = new G4Element("Carbon"  ,symbol="C" , z= 6., a= 12.01*g/mole);
 	G4Element* O  = new G4Element("Oxygen"  ,symbol="O" , z= 8., a= 16.00*g/mole);
@@ -182,11 +188,24 @@ void DetectorConstruction::DefineMaterials()
 	eu152_polatom_epox_resin->AddMaterial(Oxygen , fractionmass=0.19);
 	eu152_polatom_epox_resin->AddMaterial(Carbon , fractionmass=0.74);
 
+	G4Material* eu152_polatom_epox_resin2 = new G4Material("eu152_polatom_epox_resin2", density=1.1*g/cm3, ncomponents=3);
+	eu152_polatom_epox_resin2->AddElement(H_el , fractionmass=0.07);
+	eu152_polatom_epox_resin2->AddElement(O_el , fractionmass=0.19);
+	eu152_polatom_epox_resin2->AddMaterial(Carbon , fractionmass=0.74);
+	//with this, fix the same efF!!!!!!!!...kState in G4_O not affected!!!!
+
 	G4Material* iaea_pt2026_sample5_resin = new G4Material("iaea_pt2026_sample5_resin", density=1.16*g/cm3, ncomponents=4);
 	iaea_pt2026_sample5_resin->AddMaterial(H , fractionmass=0.084);
 	iaea_pt2026_sample5_resin->AddMaterial(Oxygen , fractionmass=0.232);
 	iaea_pt2026_sample5_resin->AddMaterial(Carbon , fractionmass=0.648);
 	iaea_pt2026_sample5_resin->AddMaterial(N , fractionmass=0.036);
+
+	G4Material* iaea_pt2026_sample5_resin2 = new G4Material("iaea_pt2026_sample5_resin2", density=1.16*g/cm3, ncomponents=4);
+	iaea_pt2026_sample5_resin2->AddElement(H_el , fractionmass=0.084);
+	iaea_pt2026_sample5_resin2->AddElement(O_el , fractionmass=0.232);
+	iaea_pt2026_sample5_resin2->AddMaterial(Carbon , fractionmass=0.648);
+	iaea_pt2026_sample5_resin2->AddElement(N_el , fractionmass=0.036);
+	//no difference from above......kState in G4_O or H or N not affected!!!!
 
 	//see geant 4 src\source\materials\src: G4NistMaterialBuilder.cc, line 704->.....
 	G4Material* Mg = man->FindOrBuildMaterial("G4_Mg");
@@ -202,6 +221,37 @@ void DetectorConstruction::DefineMaterials()
 	ifin_pt2026_pulbere->AddMaterial(S , fractionmass=0.0015);
 	ifin_pt2026_pulbere->AddMaterial(P , fractionmass=0.0015);
 	ifin_pt2026_pulbere->AddMaterial(Ca , fractionmass=0.001);
+
+	G4Material* ifin_pt2026_pulbere2 = new G4Material("ifin_pt2026_pulbere2", density=0.6*g/cm3, ncomponents=9);
+	ifin_pt2026_pulbere2->AddMaterial(Carbon , fractionmass=0.50);
+	ifin_pt2026_pulbere2->AddElement(O_el , fractionmass=0.39);
+	ifin_pt2026_pulbere2->AddElement(N_el , fractionmass=0.024);
+	ifin_pt2026_pulbere2->AddElement(H_el , fractionmass=0.07);
+	ifin_pt2026_pulbere2->AddMaterial(K , fractionmass=0.01);
+	ifin_pt2026_pulbere2->AddMaterial(Mg , fractionmass=0.002);
+	ifin_pt2026_pulbere2->AddMaterial(S , fractionmass=0.0015);
+	ifin_pt2026_pulbere2->AddMaterial(P , fractionmass=0.0015);
+	ifin_pt2026_pulbere2->AddMaterial(Ca , fractionmass=0.001);
+	//no difference from above......kState in G4_O or H or N not affected!!!!
+
+	//baso4 pulbere by material===0.662 MeV gives 0!!!!????!!!!
+	G4Material* Ba = man->FindOrBuildMaterial("G4_Ba");
+	G4Material* baso4_pulbere_material = new G4Material("baso4_pulbere_material", density=0.43*g/cm3, ncomponents=3);
+	baso4_pulbere_material->AddMaterial(S , fractionmass=0.137368);
+	baso4_pulbere_material->AddMaterial(Oxygen , fractionmass=0.274212);
+	baso4_pulbere_material->AddMaterial(Ba , fractionmass=0.58842);
+
+	G4Element* Ba_el = man->FindOrBuildElement("Ba");
+	G4Element* S_el  = man->FindOrBuildElement("S");
+	
+	G4Material* baso4_pulbere_elem = new G4Material("baso4_pulbere_elem", 0.43*g/cm3, 3);
+	baso4_pulbere_elem->AddElement(Ba_el, 1);
+	baso4_pulbere_elem->AddElement(S_el,  1);
+	baso4_pulbere_elem->AddElement(O_el,  4);
+	//some minor differences!!!!!!->elem !!!!!!!!
+
+	
+
 /*
 d = 1.5*g/cm3;
   moon =  new G4Material("moon",d,6);
