@@ -483,7 +483,7 @@ G4VPhysicalVolume* DetectorConstruction::BuildDetectorWithPointOrBeamSource()
   deltah=deltah-factive_height;//deltah=deltah-active_height;
   zoffset=0.5*deltah;
   pos = G4ThreeVector(0, 0, -zoffset);//its position ...at top, toward negative z-axis.  
-  solidDetector=new G4Tubs("Detector_solid", 0.0, 0.5*factive_diameter, 0.5*factive_height, 0.0, 2.2*pi);                
+  solidDetector=new G4Tubs("Detector_solid", 0.0, 0.5*factive_diameter, 0.5*factive_height, 0.0, 2.0*pi);                
   //logicDetector = new G4LogicalVolume(solidDetector, fTargetMaterial, "Detector_logic");  
   //physicalDetector = new G4PVPlacement(0, pos, logicDetector, "Detector_phys", logicWorldD, false, 0, fCheckOverlaps); 
   
