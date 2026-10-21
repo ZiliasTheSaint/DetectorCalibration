@@ -138,8 +138,8 @@ void PrimaryGeneratorAction::ProcessPointSource(){
   G4double costet = 1.0 - 2.0 * r;//>0, positive z axis; 2*r-1;//<0 i.e. negativ z axis!!
   //-----------------------------
   G4double sintet = sqrt(1.0 - costet * costet);
-  G4double tgtet = sintet / costet;
-  G4double teta = abs(atan(tgtet));// -pi/2,pi/2; teta is polar angle and should be >0!
+  //G4double tgtet = sintet / costet;
+  //G4double teta = abs(atan(tgtet));// -pi/2,pi/2; teta is polar angle and should be >0!
   //----------AZIMUTHAL ANGLE----------  
   r = G4UniformRand();
   G4double phi2 = 2.0 * pi * r;
@@ -220,8 +220,8 @@ void PrimaryGeneratorAction::ProcessSarpagan(){
   G4double costet = 1.0 - 2.0 * r;//>0, positive z axis; 2*r-1;//<0 i.e. negativ z axis!!
   //-----------------------------
   G4double sintet = sqrt(1.0 - costet * costet);
-  G4double tgtet = sintet / costet;
-  G4double teta = abs(atan(tgtet));// -pi/2,pi/2; teta is polar angle and should be >0!
+  //G4double tgtet = sintet / costet;
+  //G4double teta = abs(atan(tgtet));// -pi/2,pi/2; teta is polar angle and should be >0!
   //----------AZIMUTHAL ANGLE----------
   r = G4UniformRand();
   G4double phi2 = 2 * pi * r;
@@ -279,8 +279,8 @@ void PrimaryGeneratorAction::ProcessMarinelliSup(G4double x0, G4double y0, G4dou
     G4double costet = 1.0 - 2.0 * r;//>0, positive z axis; 2*r-1;//<0 i.e. negativ z axis!!
     //-----------------------------
     G4double sintet = sqrt(1.0 - costet * costet);
-    G4double tgtet = sintet / costet;
-    G4double teta = abs(atan(tgtet));
+    //G4double tgtet = sintet / costet;
+    //G4double teta = abs(atan(tgtet));
 	
 	r = G4UniformRand();
     G4double phi2 = 2 * pi * r;
@@ -334,8 +334,8 @@ void PrimaryGeneratorAction::ProcessMarinelliMiddle(G4double x0, G4double y0, G4
     G4double costet = 1.0 - 2.0 * r;//for instance
 
 	G4double sintet = sqrt(1.0 - costet * costet);
-    G4double tgtet = sintet / costet;
-    G4double teta = abs(atan(tgtet));//// -pi/2,pi/2	
+    //G4double tgtet = sintet / costet;
+    //G4double teta = abs(atan(tgtet));//// -pi/2,pi/2	
 
 	r = G4UniformRand();
     G4double phi2 = 2 * pi * r;
@@ -401,7 +401,8 @@ void PrimaryGeneratorAction::ProcessMarinelliInf(G4double x0, G4double y0, G4dou
 	double pi =3.14159265359;
   //G4cout<<"pi= "<<pi<<"!!!!!!!!@@@@@@@@@@@@@@@@!!!!!!!!"<<G4endl;//YESSS!!!!!!!!! both pi are good!!!!
 
-	G4double distz = abs(z0 - (hsourceup + hdettot));
+	//abs alone may truncate integers!! use std::abs instead!
+	G4double distz = std::abs(z0 - (hsourceup + hdettot));
 	G4double diam = 2.0 * asource;
 	G4double costmax = distz/sqrt(distz * distz + diam * diam);
 	G4double us1 = 2.0 * pi	* (1.0 - costmax);
@@ -412,8 +413,8 @@ void PrimaryGeneratorAction::ProcessMarinelliInf(G4double x0, G4double y0, G4dou
     G4double costet = -1.0 + 2.0 * r;//<0, 2*r-1;//<0 i.e. negativ z axis!!
 
 	G4double sintet = sqrt(1.0 - costet * costet);
-    G4double tgtet = sintet / costet;
-    G4double teta = abs(atan(tgtet));
+    //G4double tgtet = sintet / costet;
+    //G4double teta = abs(atan(tgtet));
 
 	r = G4UniformRand();
     G4double phi2 = 2 * pi * r;

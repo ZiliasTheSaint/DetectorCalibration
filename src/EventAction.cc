@@ -75,6 +75,24 @@ void EventAction::BeginOfEventAction(const G4Event* evt)
 
 void EventAction::EndOfEventAction(const G4Event* evt)
 {
+	/*
+	energy window - from FWHM real?....or NOT...this is theoretical not hybrid!!:
+
+	// EventAction.cc, la inceputul EndOfEventAction
+	G4double ph = phener;
+	if (ph > 0.) {
+		// FWHM^2 = a + b*E   [keV^2], E în keV
+		//ph/keV converteste Geant4 default MeV in kev.
+		//fwhm final e reconvertit inapoi in MeV prin * keV!!!!
+		G4double fwhm = std::sqrt(fA + fB*(ph/keV)) * keV;
+
+		//conversie FWHM la SIGMA: fwhm/2.3548
+		//apoi use random Gauss pentru a simula picul cu rezolutia respectiva?!??
+		ph = G4RandGauss::shoot(ph, fwhm/2.3548);
+	}
+	// apoi foloseste ph (nu phener) la prag si la ferestre
+	
+	*/
   //init for efficiency 
    G4double weight=gun->GetParticleWeight();
    G4double deltaE=gun->GetDeltaE();
