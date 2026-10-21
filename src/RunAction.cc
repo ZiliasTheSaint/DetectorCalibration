@@ -141,12 +141,15 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
   ppeak2 = err;
   err = basicAnalyze(pbkg, pbkg2, NbOfEvents);
   pbkg2 = err;
+
+  G4double saved_ppeak = ppeak;
   // "subtract background from peak"
   ppeak=ppeak-pbkg;
   // "estimate uncertainty on this subtracted value"
-  ppeak2 = (ppeak2*ppeak/NbOfEvents/100.)*(ppeak2*ppeak/NbOfEvents/100.)
+  ppeak2 = (ppeak2*saved_ppeak/NbOfEvents/100.)*(ppeak2*saved_ppeak/NbOfEvents/100.)
 			+ (pbkg2*pbkg/NbOfEvents/100.)*(pbkg2*pbkg/NbOfEvents/100.)
-			+ 2/(NbOfEvents*NbOfEvents)*(ppeak*pbkg)/(NbOfEvents-1.0);
+			//covariance term: with (G4double) to prevent int overflow
+			+ 2.0/((G4double)NbOfEvents*NbOfEvents)*(saved_ppeak*pbkg)/(NbOfEvents-1.0);//obs: 2/N da mereu 0!!!!! nenecesar-e unc diff = SQRT(unc_p^2+unc_b^2)
   if (ppeak2 > 0.) {
 	ppeak2=sqrt(ppeak2)/(ppeak/NbOfEvents);
   }
@@ -156,6 +159,10 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
   }
   //percent fix
   ppeak2 = 100.*ppeak2;
+
+  //corect ar fi asa: ppeak2 = unc_rel al ppeak in %
+  //pbkg2 = unc_rel al pbkg in %
+  //unc diff = SQRT(unc_p^2+unc_b^2)
   //=============
   G4double efficiency = ppeak * 100.0 / NbOfEvents;// %
   G4double efficiency_error = ppeak2;

@@ -87,6 +87,13 @@ void EventAction::EndOfEventAction(const G4Event* evt)
    //G4double restMass = particleGun->GetParticleDefinition()->GetPDGMass();
    //G4double kineticEnergy=particleEnergy-restMass;
    //particleEnergy IS ALREADY A KINETIC ENERGY!!!!
+
+   //small corection for e+. phener is edep see SteppingAction.cc aStep->GetTotalEnergyDeposit() si eventaction->AddRealEnergy(edep);
+   //here, in EndOfEventAction we collect all edep of all primaries and secondaries particles...so we might have photons from e+ annihilation 
+   //also scored here...so since particleEnergy is e+ kinetic energies we have to consider +2mec2 as maximum total energy deposited by e+ + photons!!!!
+   if (particleGun->GetParticleDefinition()->GetParticleName() == "e+")
+    particleEnergy += 2.0*electron_mass_c2;                           // +1.022 MeV
+
    if (phener>=particleEnergy-deltaE && phener<=particleEnergy+deltaE)
    //if (phener>=kineticEnergy-deltaE && phener<=kineticEnergy+deltaE)
    {
